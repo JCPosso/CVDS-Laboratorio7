@@ -21,12 +21,18 @@ package edu.eci.cvds.samples.services.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Date;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
+import edu.eci.cvds.samples.entities.Item;
+import edu.eci.cvds.samples.entities.TipoItem;
 
 /**
  *
@@ -63,9 +69,24 @@ public class MyBatisExample {
         SqlSessionFactory sessionfact = getSqlSessionFactory();
 
         try(SqlSession sqlss = sessionfact.openSession()) {
-            //Crear el mapper y usarlo: 
+            //Mappers
             ClienteMapper clienteMapper = sqlss.getMapper(ClienteMapper.class);
-            System.out.println(clienteMapper.consultarCliente(1));
+            ItemMapper itemMapper = sqlss.getMapper(ItemMapper.class);
+            TipoItemMapper tipoItemMapper = sqlss.getMapper(TipoItemMapper.class);
+            
+            //Pruebas Mapper Usuario OK
+            System.out.println(clienteMapper.consultarClientes()); //Bill Clinton
+            System.out.println(clienteMapper.consultarCliente(98347)); //Bill Clinton
+
+            //Pruebas Mapper Item OK
+            System.out.println(itemMapper.consultarItem(2));
+            System.out.println(itemMapper.consultarItems());
+
+            //Insertar tipo item NO Ok
+            //tipoItemMapper.addTipoItem("Jorgito Guayaco");
+            //TipoItem tipo = tipoItemMapper.getTipoItem(12);
+            //itemMapper.insertarItem(new Item(tipo, 2143369, "Jorgito", "Jorgito el guayaco", new Date(), 50000, "formatoRenta", "undefined"));
+            //clienteMapper.agregarItemRentadoACliente(98347, 2143369, new Date(), new Date());
             sqlss.close();
         } catch (Exception e) {
             e.printStackTrace();

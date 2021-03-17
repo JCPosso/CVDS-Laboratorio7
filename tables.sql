@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `VI_CLIENTES` (
 -- Table `VI_TIPOITEM`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `VI_TIPOITEM` (
-  `id` INT(11) NOT NULL,
+  `id` INT(12) NOT NULL,
   `descripcion` VARCHAR(50)  NOT NULL);
 
 

@@ -9,5 +9,9 @@
     <id property='id' column='id'/>
     <result property='descricion' column='descricion'/>
   </resultMap>
+
+  <insert parameterType="map" id="addTipoItem">
+    insert into VI_TIPOITEM values(#{des})
+  </insert>
                 
 </mapper>
