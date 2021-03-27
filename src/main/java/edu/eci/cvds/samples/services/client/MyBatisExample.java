@@ -30,6 +30,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ClienteMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemMapper;
+import edu.eci.cvds.sampleprj.dao.mybatis.mappers.ItemRentadoMapper;
 import edu.eci.cvds.sampleprj.dao.mybatis.mappers.TipoItemMapper;
 import edu.eci.cvds.samples.entities.Item;
 import edu.eci.cvds.samples.entities.TipoItem;
@@ -73,21 +74,23 @@ public class MyBatisExample {
             ClienteMapper clienteMapper = sqlss.getMapper(ClienteMapper.class);
             ItemMapper itemMapper = sqlss.getMapper(ItemMapper.class);
             TipoItemMapper tipoItemMapper = sqlss.getMapper(TipoItemMapper.class);
-            
+            ItemRentadoMapper itemRentadoMapper = sqlss.getMapper(ItemRentadoMapper.class);
             //Pruebas Mapper Usuario OK
-            //System.out.println(clienteMapper.consultarClientes()); //Bill Clinton
+            //System.out.println(clienteMapper.consultarClientes()); 
             //System.out.println(clienteMapper.consultarCliente(98347)); //Bill Clinton
 
             //Pruebas Mapper Item OK
             //System.out.println(itemMapper.consultarItem(2));
             //System.out.println(itemMapper.consultarItems());
 
-            //Insertar tipo item NO Ok
-            tipoItemMapper.addTipoItem("Jorgito Guayaco");
-            TipoItem tipo = tipoItemMapper.getTipoItem(1);
-            itemMapper.insertarItem(new Item(tipo, 2143369, "Jorgito", "Jorgito el guayaco", new Date(), 50000, "formatoRenta", "undefined"));
-            clienteMapper.agregarItemRentadoACliente(98347, 2143369, new Date(), new Date());
-            sqlss.commit();
+            // //Insertar tipo item  Ok
+             //tipoItemMapper.addTipoItem("Jorgito Guayaco0o");
+            //  TipoItem tipo = tipoItemMapper.getTipoItem(1);
+            //  itemMapper.insertarItem(new Item(tipo, 2143370, "Jorgito", "Jorgito el guayaco", new Date(), 50000, "formatoRenta", "undefined"));
+            //  clienteMapper.agregarItemRentadoACliente(98347, 2143369, new Date(), new Date());
+            System.out.println(itemRentadoMapper.consultarItemRentado(99,2132674));
+             sqlss.commit();
+
             sqlss.close();
         } catch (Exception e) {
             e.printStackTrace();

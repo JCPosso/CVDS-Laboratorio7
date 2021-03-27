@@ -60,7 +60,7 @@ public class JDBCExample {
             }
             System.out.println("-----------------------");
             
-            int suCodigoECI=2143369;
+            int suCodigoECI=2143311;
             registrarNuevoProducto(con, suCodigoECI, "Johann Cepeda", 1000);   
             con.commit(); 
             
@@ -106,8 +106,11 @@ public class JDBCExample {
      */
     public static List<String> nombresProductosPedido(Connection con, int codigoPedido){
         List<String> np=new LinkedList<>();
-        String query = "SELECT * from ORD_PRODUCTOS join ORD_DETALLE_PEDIDO ON (ORD_DETALLE_PEDIDO.pedido_fk = ORD_PRODUCTOS.codigo) WHERE ORD_PRODUCTOS.codigo = ?";
-        try (PreparedStatement nombresPedidos = con.prepareStatement(query)) {
+        String query = "select nombre from "+
+        "ORD_PRODUCTOS JOIN  ORD_DETALLE_PEDIDO "+
+        "ON ORD_PRODUCTOS.codigo = ORD_DETALLE_PEDIDO.producto_fk "+
+        "WHERE ORD_DETALLE_PEDIDO.pedido_fk= ?";
+              try (PreparedStatement nombresPedidos = con.prepareStatement(query)) {
             nombresPedidos.setInt(1, codigoPedido);
             ResultSet rs = nombresPedidos.executeQuery();
 
@@ -131,7 +134,10 @@ public class JDBCExample {
     public static int valorTotalPedido(Connection con, int codigoPedido){
         
         int value = 0;
-        String query = "SELECT SUM(ORD_PRODUCTOS.precio * ORD_DETALLE_PEDIDO.cantidad) AS res FROM ORD_DETALLE_PEDIDO JOIN ORD_PRODUCTOS ON ORD_PRODUCTOS.codigo = ORD_DETALLE_PEDIDO.producto_fk WHERE ORD_DETALLE_PEDIDO.pedido_fk = ?";
+        String query = "select SUM(precio*cantidad) AS res FROM "+
+        "ORD_PRODUCTOS JOIN  ORD_DETALLE_PEDIDO "+
+        "ON ORD_PRODUCTOS.codigo = ORD_DETALLE_PEDIDO.producto_fk "+
+        "WHERE ORD_DETALLE_PEDIDO.pedido_fk= ?";
         
         //Crear prepared statement
         try(PreparedStatement statement = con.prepareStatement(query)){
